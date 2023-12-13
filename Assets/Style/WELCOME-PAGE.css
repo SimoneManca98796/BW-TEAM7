@@ -102,7 +102,7 @@ div #checkBox {
 }
 
 /* PROCEED */
-.proceed {
+#proceed {
   cursor: pointer;
   cursor: pointer;
   font-weight: 600;
@@ -118,7 +118,7 @@ div #checkBox {
   border: 0.1px solid #2ccfcf;
   box-shadow: 0 0 10px #00ffff;
 }
-.proceed:hover {
+#proceed:hover {
   border-color: #1eacac;
   color: #031330;
   box-shadow: 0 0 3px rgb(22, 154, 230), inset 0 0 5px;
