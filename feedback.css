@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@300&family=Outfit:wght@200;600&family=Poppins:wght@400;600&display=swap");
 
 body {
-  background-image: url("./bg.jpg");
+  background-image: url("./assets/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -36,14 +36,21 @@ body {
   height: 3rem;
   cursor: pointer;
 }
+
 .fas {
-  color: #090c27;
   font-size: 2.5rem;
+  color: #090c27;
+  cursor: pointer;
+}
+
+.fas.selected {
+  color: #01ffff;
 }
 
 #title3 {
   font-weight: 200;
   margin-top: 4rem;
+  margin-bottom: 2.5rem;
 }
 
 #final-container {
@@ -74,9 +81,4 @@ button {
   margin-top: 30px;
   cursor: pointer;
   font-weight: 600;
-}
-
-
-.clicked {
-  color: #01ffff;
 }
