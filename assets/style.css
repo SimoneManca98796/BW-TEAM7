@@ -25,12 +25,39 @@ header {
 }
 
 #timer {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 24px;
-    color: white;
+  position: fixed;
+  top: 7px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bolder;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 2px solid transparent; /* Imposta un bordo trasparente */
+  overflow: hidden; /* Nasconde la parte di linea in eccesso */
 }
+
+#timer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  border-top: 2px solid #00FFFF; /* Colore e spessore della linea */
+  animation: animateBorder 2s linear infinite; /* Animazione della linea */
+}
+
+@keyframes animateBorder {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
 
 body {
     padding: 0;
@@ -115,9 +142,15 @@ footer {
         font-size: 2em;
         font-weight: bolder;
         padding-bottom: 50px;
-        padding-left: 10px
+        padding-left: 10px;
+        height: 100px; /* Altezza fissa per il div delle domande */
+  position: relative; /* Imposta la posizione relativa */
+
       }
  
+#domande p {
+        margin: 0; /* Imposta i margini dei paragrafi a 0 */
+      }
 
  #Prossimo {
         padding: 10px 20px;
