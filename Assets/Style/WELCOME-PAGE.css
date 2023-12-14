@@ -59,7 +59,7 @@ div #sub-h1 {
   margin-left: 5.1em;
   margin-top: -20px;
   font-size: 1.2em;
-  color: #d7d8df;
+  color: #fefefe;
 }
 /* p2 */
 .paragrafo2 {
@@ -67,7 +67,7 @@ div #sub-h1 {
   margin-left: 5.1em;
   margin-top: -20px;
   font-size: 1.2em;
-  color: #d7d8df;
+  color: #fefefe;
 }
 /* FINE PARTE: INTRODUCTION */
 
@@ -88,15 +88,17 @@ div #sub-h1 {
 
 /* Parte: "I PROMISE TO ANSWER..." */
 .promise {
+  box-sizing: border-box;
   margin-left: 10px;
   font-size: 1.1em;
 }
 /* ho fatto alcuni tentativi per rendere il Bg. trasparente, senza risultati. */
 div #checkBox {
   margin-left: 26em;
-  scale: 1.5;
+  scale: 1.8;
 }
 #checkBox {
+  box-shadow: 0 0 5px #099c22;
   cursor: pointer;
   accent-color: #099c22;
 }
