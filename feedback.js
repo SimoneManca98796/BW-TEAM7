@@ -1,20 +1,23 @@
 // 1) Aggiungo evento per far illuminare le stelle al click dell'utente su di esse in base al suo feedback !
 
-const changeColor = function () {
-  const stars = [i];
-  document.getElementsByClassName("fas"); // richiamo l'elemento nell'html
-  stars[i].addEventListener("click", function () {
-    for (i = 0; i < stars.length; i++) {
-      if (stars[i].style.color !== "#01ffff") {
-        stars[i].style.color = "#01ffff";
+const stars = document.querySelectorAll(".fas.fa-star"); // orso polare death
+//seleziona tutti gli elementi HTML che hanno le classi "fas" e "fa-star"
+// quindi le stelle
+stars.forEach((star, index) => {
+  // itera tutte le stelle
+  star.addEventListener("click", function () {
+    // Rimuovi la classe "clicked" da tutte le stelle
+    stars.forEach((star, i) => {
+      if (i <= index) {
+        // se i è minore o uguale a index
+        // parte l'evento "clicked"
+        star.classList.add("clicked");
       } else {
-        stars[i].style.color = "#090c27";
+        star.classList.remove("clicked");
       }
-    }
+    });
   });
-};
-
-changeColor();
+});
 
 const getTheLink = function () {
   const myButton = document.getElementById("button");
