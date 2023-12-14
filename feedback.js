@@ -1,17 +1,21 @@
 // 1) Aggiungo evento per far illuminare le stelle al click dell'utente su di esse in base al suo feedback !
 
-const stars = document.querySelectorAll(".star i");
-
+const stars = document.querySelectorAll(".fas.fa-star"); // orso polare dead
+//seleziona tutti gli elementi HTML che hanno le classi "fas" e "fa-star"
+// quindi le stelle
 stars.forEach((star, index) => {
+  // itera tutte le stelle
   star.addEventListener("click", function () {
-    // Illumina la stella cliccata e quelle precedenti
-    for (let i = 0; i <= index; i++) {
-      stars[i].style.color = "#01ffff";
-    }
-    // Riporta tutte le stelle successive al colore di default
-    for (let i = index + 1; i < stars.length; i++) {
-      stars[i].style.color = "#090c27";
-    }
+    // Rimuovi la classe "clicked" da tutte le stelle
+    stars.forEach((star, i) => {
+      if (i <= index) {
+        // se i è minore o uguale a index
+        // parte l'evento "clicked"
+        star.classList.add("clicked");
+      } else {
+        star.classList.remove("clicked");
+      }
+    });
   });
 });
 

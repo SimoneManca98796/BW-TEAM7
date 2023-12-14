@@ -242,8 +242,12 @@ const clickAnswer = function (selezionaRisposta, domandaIndex) {
 };
 
 const bottoneVaiPagina = document.getElementById("vaiAllaPaginaResults");
+////////
+
+////////
 bottoneVaiPagina.addEventListener("click", () => {
-  window.location.href = "./page3.html?domandeCorrette=" + calcolaRisultato(); // "http://"
+  window.location.href =
+    "./page3.html?domandeCorrette=" + calcolaRisultato(risposteUtente); // "http://"
 });
 
 /*
@@ -352,5 +356,25 @@ const calcolaRisultato = (risposteUtente) => {
 
   return punteggio;
 };
+
 // chiamo prima domanda dal TIMEER:
 showQuestion(0);
+
+const mostraEsitoQuiz = (punteggio) => {
+  const esitoDisplay = document.createElement("p");
+  esitoDisplay.textContent = `Il tuo punteggio è ${punteggio} su ${questions.length}.`;
+
+  const container = document.getElementById("esitoQuiz"); // Sostituisci con l'ID appropriato
+  container.appendChild(esitoDisplay);
+};
+
+// All'interno del blocco in cui controlli se è l'ultima domanda
+if (domandaIndex === questions.length - 1) {
+  document.getElementById("contenitore").style.display = "none"; // Nascondi le domande
+
+  // Calcola il punteggio e mostra l'esito
+  const punteggio = calcolaRisultato(risposteUtente);
+  salvaRisultato(punteggio);
+  mostraEsitoQuiz(punteggio); // Mostra l'esito
+  console.log(mostraEsitoQuiz());
+}
