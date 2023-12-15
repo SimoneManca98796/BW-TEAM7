@@ -1,8 +1,106 @@
-/*document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
+  // Recupera i dati del quiz dal localStorage o da un'altra fonte
+  const punteggioQuiz = localStorage.getItem("punteggioQuiz");
+  const numeroDomande = localStorage.getItem("numeroDomande");
+  const risposteUtente = localStorage.getItem("risposteUtente");
+
+  // Calcola la percentuale di risposte corrette e sbagliate
+  const risposteCorrette = parseInt(punteggioQuiz);
+  const punteggioUtente = JSON.parse(risposteUtente); // Assume che risposteUtente sia una stringa JSON
+
+  // Calcola le risposte sbagliate
+  const risposteSbagliate = parseInt(numeroDomande) - risposteCorrette; // Assumendo che risposteCorrette sia un array di risposte
+
+  // Imposta i dati per il grafico
   const dati = {
     datasets: [
       {
-        data: [25, 75],
+        data: [risposteCorrette, risposteSbagliate],
+        backgroundColor: ["#00FFFF", "#D20094"],
+        // Aggiungi le etichette direttamente alle fette del grafico
+        labels: [
+          `Correct: ${risposteCorrette}`,
+          `Incorrect: ${risposteSbagliate}`,
+
+          // "Correct: " + risposteCorrette,
+          //"Incorrect: " + risposteSbagliate,
+        ],
+      },
+    ],
+  };
+
+  const opzioni = {
+    responsive: true,
+    cutout: 95,
+    elements: {
+      arc: { borderWidth: 0 },
+    },
+    /////
+    plugins: {
+      datalabels: {
+        formatter: (value, ctx) => {
+          return ctx.chart.data.labels[ctx.dataIndex];
+        },
+        color: "#fff", // Colore del testo dell'etichetta
+      },
+    },
+    /////
+  };
+
+  const divGrafico = document.getElementById("grafico");
+  const ctx = divGrafico.getContext("2d");
+
+  const donutChart = new Chart(ctx, {
+    type: "doughnut",
+    data: dati,
+    options: opzioni,
+  });
+
+  // Recupera gli elementi del DOM per visualizzare i risultati
+  const percentualeBlu = document.getElementById("percentuale-blu");
+  const percentualeFuxia = document.getElementById("percentuale-fuxia");
+  const numeroRisposteCorretteElement = document.getElementById(
+    "numero-risposte-corrette"
+  );
+  const numeroRisposteSbagliateElement = document.getElementById(
+    "numero-risposte-sbagliate"
+  );
+  const messaggioCentrale = document.getElementById("testo-centrale");
+
+  // Mostra i risultati nel DOM
+  percentualeBlu.innerText = `${risposteCorrette}/${numeroDomande}`;
+  percentualeFuxia.innerText = `${risposteSbagliate}/${numeroDomande}`;
+  numeroRisposteCorretteElement.innerText = `${risposteCorrette}/${numeroDomande} questions`;
+  numeroRisposteSbagliateElement.innerText = `${risposteSbagliate}/${numeroDomande} questions`;
+
+  const percentualeRisposteCorrette = (risposteCorrette / numeroDomande) * 100;
+  console.log("Percentuale di risposte corrette:", percentualeRisposteCorrette);
+  if (percentualeRisposteCorrette > 60) {
+    messaggioCentrale.innerText = "Congratulations! You passed the quiz!";
+  } else {
+    messaggioCentrale.innerText =
+      "Oh no! You didn't pass the quiz... Try again!";
+  }
+});
+
+/*document.addEventListener("DOMContentLoaded", function () {
+  // Recupera i dati del quiz dal localStorage o da un'altra fonte
+  const punteggioQuiz = localStorage.getItem("punteggioQuiz");
+  const numeroDomande = localStorage.getItem("numeroDomande");
+  const risposteUtente = localStorage.getItem("risposteUtente");
+
+  // Calcola la percentuale di risposte corrette e sbagliate
+  const risposteCorrette = parseInt(punteggioQuiz);
+  const punteggioUtente = JSON.parse(risposteUtente); // Assume che risposteUtente sia una stringa JSON
+
+  // Calcola le risposte sbagliate
+  const risposteSbagliate = parseInt(numeroDomande) - risposteCorrette; // Assumendo che risposteCorrette sia un array di risposte
+
+  // Imposta i dati per il grafico
+  const dati = {
+    datasets: [
+      {
+        data: [risposteCorrette, risposteSbagliate],
         backgroundColor: ["#00FFFF", "#D20094"],
       },
     ],
@@ -24,38 +122,52 @@
     data: dati,
     options: opzioni,
   });
-
-  // Recupera le percentuali e aggiornale nel DOM
+ ///////////////////// const impostaTestoCiambella = (testo) => {
+    // Aggiorniamo il dataset per la ciambella con un valore fisso
+    donutChart.data.datasets[0].data = [1]; // Valorizza con un numero fisso
+    donutChart.data.labels = [testo]; // Imposta il testo nella ciambella
+    donutChart.update(); // Aggiorna il grafico
+  };/////////////////////
+  // Recupera gli elementi del DOM per visualizzare i risultati
   const percentualeBlu = document.getElementById("percentuale-blu");
   const percentualeFuxia = document.getElementById("percentuale-fuxia");
-
-  const numeroRisposteCorrette = document.getElementById(
+  const numeroRisposteCorretteElement = document.getElementById(
     "numero-risposte-corrette"
   );
-  const numeroRisposteSbagliate = document.getElementById(
+  const numeroRisposteSbagliateElement = document.getElementById(
     "numero-risposte-sbagliate"
   );
   const messaggioCentrale = document.getElementById("testo-centrale");
 
-  percentualeBlu.innerText = dati.datasets[0].data[0];
-  percentualeFuxia.innerText = dati.datasets[0].data[1];
+  // Mostra i risultati nel DOM
+  percentualeBlu.innerText = `${risposteCorrette}/${numeroDomande}`;
+  percentualeFuxia.innerText = `${risposteSbagliate}/${numeroDomande}`;
+  numeroRisposteCorretteElement.innerText = `${risposteCorrette}/${numeroDomande} questions`;
+  numeroRisposteSbagliateElement.innerText = `${risposteSbagliate}/${numeroDomande} questions`;
 
-  const risposteCorrette = 25;
-  const risposteSbagliate = 5;
-  numeroRisposteCorrette.innerText = `${risposteCorrette}/30 questions`;
-  numeroRisposteSbagliate.innerText = `${risposteSbagliate}/30 questions`;
-
-  const percentualeRisposteCorrette = dati.datasets[0].data[0];
+  const percentualeRisposteCorrette = (risposteCorrette / numeroDomande) * 100;
   if (percentualeRisposteCorrette > 60) {
-    messaggioCentrale.style.display = "block";
+    messaggioCentrale.innerText = "Congratulations! You passed the quiz!";
+    impostaTestoCiambella("Congratulations!"); // Imposta il testo "Congratulations!" nella ciambella
   } else {
-    messaggioCentrale.style.display = "block";
+    messaggioCentrale.innerText = "Oh no! You didn't pass the quiz... Try again!";
+    impostaTestoCiambella("Try again!"); // Imposta il testo "Try again!" nella ciambella
+  }
+*/
+// Mostra un messaggio basato sulla percentuale di risposte corrette
+/*const percentualeRisposteCorrette = (risposteCorrette / numeroDomande) * 100;
+  if (percentualeRisposteCorrette > 60) {
+    messaggioCentrale.innerText = "Congratulations! You passed the quiz!";
+  } else {
     messaggioCentrale.innerText =
-      "Oh no! You didn't pass the exam... you'll have to work harder and retake it!";
+      "Oh no! You didn't pass the quiz... Try again!";
   }
 });*/
+//});
+//let correctAnswers = 0; // Dichiarazione e inizializzazione di correctAnswers
 
-document.addEventListener("DOMContentLoaded", function () {
+//let incorrectAnswers = 0;
+/*document.addEventListener("DOMContentLoaded", function () {
   const dati = {
     datasets: [
       {
@@ -120,10 +232,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   const urlPaginaCorrente = window.location.href;
   console.log(urlPaginaCorrente);
-
-  // vado da WENDY:
-  const rateUsButton = document.getElementById("button");
-  rateUsButton.addEventListener("click", function () {
-    window.location.href = "./feedback.html";
-  });
+*/
+// vado da WENDY:
+const rateUsButton = document.getElementById("button");
+rateUsButton.addEventListener("click", function () {
+  window.location.href = "./feedback.html";
 });
+//});

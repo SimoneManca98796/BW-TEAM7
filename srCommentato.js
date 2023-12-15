@@ -110,7 +110,11 @@ document.addEventListener("DOMContentLoaded", function () {
   ); // converto htmlcollection con array(GOOGLE) per poter usare forEach
   //const BottoneRisposte = document.getElementsByClassName("bottone");
   const nextButton = document.getElementById("Prossimo");
+
   BottoneRisposte.forEach((bottone) => {
+    // uso forEach per dare a ciascun bottone i due eventi "mouseenter" e "mouseleave"
+    // BottoneRisposte è l'array degli elementi html con classe "bottone"
+    // bottone parametro, è appunto un parametro che raffigura ogni elemento all'interno dell'array BottoneRisposte
     bottone.addEventListener("mouseenter", () => {
       bottone.style.backgroundColor = "#D20094"; // Modifica colore
       bottone.style.color = "white"; // modifica il colore quando ci passi sopra con il cursore
@@ -122,24 +126,45 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  let indexDomande = 0;
+  let indexDomande = 0; // indice da cui parto con le domande
+
+  //showQuestion(indexDomande); // invoco questa funzione altrimenti non mi darà la prima domanda
+
   const risultatoDomanda = document.getElementById("risultatoDomanda"); //NOOO
 
   const showQuestion = function (index) {
-    risultatoDomanda.innerText = "";
+    // parametro index funge da indice per la domanda dell'array che vogliamo
+    // [0] [1] [2] etc...
+
+    risultatoDomanda.innerText = ""; // Rimuove il testo del risultato
+
+    // risultatoDomanda.style.display = "none"; // Nascondi il paragrafo del risultato QUIIIII
     TestoDomanda.innerText = questions[index].question; // Imposta il testo della nuova domanda
+
+    TestoDomanda.innerText = questions[index].question; // testo domanda
 
     const risposteCorrenti = questions[index].answers; // const creato per le risposte
     // .answers aggiunge le risposte all'indice preso come parametro nelle domande
     const bottoniVisibili = Math.min(
+      // numero dei bottoni visibili
+      // Math.min l'ho googlato, per riuscire a far uscire i bottoni che bastavano
+      // in base a quante risposte avevo
       risposteCorrenti.length, // questi due array con .length mi mostrano la loro lunghezza per le loro risposte e bottoni
       BottoneRisposte.length // mostra in base alla singola domanda quanti bottoni
     );
+
     startTimer();
+    // clearInterval(timer); // Resetta il timer
+    // seconds = 60;
+    // countdown(); // Avvia il timer per la nuova domanda
+
     for (let i = 0; i < bottoniVisibili; i++) {
       BottoneRisposte[i].style.visibility = "visible"; // aggiungo style al mio array per rendere bottone visibile
       BottoneRisposte[i].innerText = risposteCorrenti[i]; // trova le risposte
       BottoneRisposte[i].addEventListener("click", () => {
+        // aggiungo evento a una funzione, in questo caso "click"
+        // per fare uscire l'alert quando pigio sul bottone
+        // funzione con metodo arrow  () =>
         clickAnswer(risposteCorrenti[i], index); // invoco la funzione
         //console.log(clickAnswer, index);
       });
@@ -147,8 +172,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // questo sotto è un nuovo ciclo per rendere i due bottoni nelle boolean questions :
     for (let i = bottoniVisibili; i < BottoneRisposte.length; i++) {
       BottoneRisposte[i].style.visibility = "hidden";
+      // aggiungo uno style con visibilty hidden in caso le risposte siano meno di 4(BottoneRisposte)
+      // cosi facendo la mia variabile ciclerà le domande con meno di 4 risposte come ad esempio true/false
+      // facendo uscire s
     }
   };
+
+  //showQuestion(0); // <--- per mostrare la prima domanda
+  //const risultatoDomanda = document.getElementById("risultatoDomanda"); // ?
+  // funzione per gestire click delle answeers:
   const clickAnswer = function (selezionaRisposta, domandaIndex) {
     console.log("Risposta selezionata:", selezionaRisposta);
     console.log("Indice della domanda:", domandaIndex);
@@ -156,7 +188,10 @@ document.addEventListener("DOMContentLoaded", function () {
       `Risposta selezionata: ${selezionaRisposta}, Domanda: ${domandaIndex}`
     );
     const correctAnswer = questions[domandaIndex].correctAnswer; // la metto sopra currentIndex
-    const currentIndex = domandaIndex;
+    const currentIndex = domandaIndex; //indexDomande; // Memorizza l'indice corrente della domanda CORRETTO!!
+
+    // Memorizzazione della risposta dell'utente
+    //risposteUtente[domandaIndex] = selezionaRisposta;
     risposteUtente[currentIndex] = selezionaRisposta;
 
     if (selezionaRisposta === correctAnswer) {
@@ -165,26 +200,61 @@ document.addEventListener("DOMContentLoaded", function () {
       risultatoDomanda.innerText =
         "RISPOSTA ERRATA! La risposta corretta è: " + correctAnswer;
     }
+
+    //indexDomande++; // incremento l'indice dopo che l'utente fa il comportamento della risposta
+
+    // Controlla se è l'ultima domanda///////////////////
     if (domandaIndex === questions.length - 1) {
+      ////////////////////
+      // Mostra il bottone alla fine del quiz/////////////////////
       bottoneVaiPagina.style.display = "block"; /////////////////////////
-    }
+    } // con questo if sto facendo in modo che esca il bottone a fine quiz
+
+    //
+    // Avvio il timer per la prossima domanda dopo la gestione della risposta
     startTimer();
+    //
 
     setTimeout(() => {
+      // GOOGLE, serve per andare alla domanda successiva un secondo dopo che clicco il pulsante
+      // questo if/else funge come la soluzione dopo il funzionamento del bottone premuto
+      // per la risposta
       if (domandaIndex === questions.length - 1) {
         /////////////////////////////////////////////////////////////////////////////
         // Nascondi la sezione delle domande e delle risposte
         document.getElementById("contenitore").style.display = "none";
 
-        bottoneVaiPagina.style.display = "block";
+        bottoneVaiPagina.style.display = "block"; // Mostra il bottone
+        ////////////////////////////////////////////////////////////////////////////////7
+        // Quando tutte le domande sono state risposte
+        // Calcola il punteggio usando le risposte dell'utente
         const punteggio = calcolaRisultato(risposteUtente);
         salvaRisultato(punteggio);
+
+        // Aggiungo click per mandarlo alla pagina di Michela:
         bottoneVaiPagina.addEventListener("click", () => {
           console.log(bottoneVaiPagina);
+          // INSERIRE QUI URL
+          // const punteggio = calcolaRisultato();
           const urlPaginaCorrente = window.location.href;
           console.log(urlPaginaCorrente);
 
+          // Reindirizzamento verso la pagina3.html
           window.location.href = "./page3.html";
+          // window.location.href = "./results.html?punteggio=" + punteggio;
+          // console.log("Punteggio:", punteggio); // Assicuriamoci che qui ci sia un valore valido
+          // window.location.href = `http://127.0.0.1:5500/results.html?punteggio=${punteggio}`;
+          // window.location.href = `http://127.0.0.1:5500/results.html?punteggio=${punteggio}`;
+          //   console.log("Punteggio:", punteggio); // Assicuriamoci che qui ci sia un valore valido
+          //   window.location.href = `http://127.0.0.1:5500/results.html?punteggio=${punteggio}`;
+          // });
+          // window.location.href = `http://127.0.0.1:5500/results.html?punteggio=${punteggio}`;
+          //  window.location.href =
+          //     "http://127.0.0.1:5500/results.html?punteggio=" + calcolaRisultato();
+          //  "http://127.0.0.1:5500/results.html" + calcolaRisultato();
+          //  "./page3.html?domandeCorrette=" + calcolaRisultato(); // "http://"
+
+          // Mostra l'alert con il punteggio
           alert(`Il tuo punteggio è ${punteggio} su ${questions.length}`);
           //alert(`Il tuo punteggio è ${punteggio} su ${questions.length}`);
         });
@@ -196,12 +266,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const bottoneVaiPagina = document.getElementById("vaiAllaPaginaResults");
   ////////
+
+  ////////
+  /* bottoneVaiPagina.addEventListener("click", () => {
+      const punteggio = calcolaRisultato(risposteUtente); // Calcola il punteggio
+      salvaRisultato(punteggio); // Salva il punteggio nel localStorage
+  
+      // Aggiungi il punteggio come parametro nell'URL e reindirizza alla pagina3.html
+      window.location.href = "./page3.html"; //?domandeCorrette=${punteggio}`;
+    });*/
+
+  /*
+      if (domandaIndex === questions.length - 1) {
+  
+  
+        // Aggiungo click per mandarlo alla pagina di Michela:
+        bottoneVaiPagina.addEventListener("click", () => {
+          // INSERIRE QUI URL
+          window.location.href =
+            "./page3.html?domandeCorrette=" + calcolaRisultato(); // "http://" */
+
+  // const containerDomanda = document.getElementById("");
+  // containerDomanda.style.display = "none";
+  //};QUAAAA
+
   BottoneRisposte.forEach((bottone, index) => {
     bottone.addEventListener("click", () => {
       const selectedAnswer = questions[index].answers[index]; // indexDomande diventa index
       clickAnswer(selectedAnswer, index);
     });
   });
+
+  // SALVATAGGIO DEL QUIZ: PRIMO LINK STEFANO
+  //////////////////////////////////////////
+  /*const calcolaRisultato = (risposteUtente) => {
+    let punteggio = 0;
+  
+    // Verifica ogni risposta dell'utente e incrementa il punteggio se è corretta
+    risposteUtente.forEach((risposta, index) => {
+      if (risposta === questions[index].correctAnswer) {
+        punteggio++;
+      }
+    });
+  
+    return punteggio;
+  };*/
+
+  /*const punteggio = calcolaRisultato(risposteUtente); // Calcola il punteggio dell'utente
+  localStorage.setItem("punteggioQuiz", punteggio); // Memorizza il punteggio nel localStorage
+  // salvaRisultato(punteggio); // Salva il punteggio nel localStorage */
 
   const salvaRisultato = (punteggio) => {
     localStorage.setItem("punteggioQuiz", punteggio);
@@ -228,6 +341,15 @@ document.addEventListener("DOMContentLoaded", function () {
       container.appendChild(punteggioDisplay);
     }
   };
+  //salvaRisultato(punteggio); // Salva il punteggio nel localStorage
+  // alert(`Il tuo punteggio è ${punteggio} su ${questions.length}`);
+  // }
+
+  //// dentro:
+  //const punteggio = calcolaRisultato(risposteUtente);
+  //alert(`Il tuo punteggio è ${punteggio} su ${questions.length}`);
+  // salvaRisultato(punteggio); // Memorizza il punteggio nel localStorage
+
   const calcolaRisultato = (risposteUtente) => {
     let punteggio = 0;
 
@@ -247,25 +369,28 @@ document.addEventListener("DOMContentLoaded", function () {
   const mostraEsitoQuiz = (punteggio) => {
     const esitoDisplay = document.createElement("p");
     esitoDisplay.textContent = `Il tuo punteggio è ${punteggio} su ${questions.length}.`;
+
     const container = document.getElementById("esitoQuiz"); // Sostituisci con l'ID appropriato
     container.appendChild(esitoDisplay);
   };
+
+  // All'interno del blocco in cui controlli se è l'ultima domanda
   if (domandaIndex === questions.length - 1) {
-    document.getElementById("contenitore").style.display = "none";
+    document.getElementById("contenitore").style.display = "none"; // Nascondi le domande
+
+    // Calcola il punteggio e mostra l'esito
     const punteggio = calcolaRisultato(risposteUtente);
     salvaRisultato(punteggio);
     mostraEsitoQuiz(punteggio); // Mostra l'esito
     console.log(mostraEsitoQuiz());
   }
+
   bottoneVaiPagina.addEventListener("click", () => {
     console.log("bottone cliccato");
     const punteggio = calcolaRisultato(risposteUtente); // Calcola il punteggio
-    salvaRisultato(punteggio);
-    //localStorage.setItem("punteggioQuiz", punteggio);
-    localStorage.setItem("numeroDomande", questions.length);
+    salvaRisultato(punteggio); // Salva il punteggio nel localStorage
 
-    window.location.href = `./results.html?domandeCorrette=${punteggio}`;
-  });
-});
-// localStorage setItems
-// da script localStorage ---> getItems
+    // Aggiungi il punteggio come parametro nell'URL e reindirizza alla pagina3.html
+    window.location.href = "./results.html";
+  }); //?domandeCorrette=${punteggio}`;
+}); ////////////////////////
