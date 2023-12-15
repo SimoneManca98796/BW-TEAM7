@@ -76,8 +76,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const percentualeRisposteCorrette = (risposteCorrette / numeroDomande) * 100;
   console.log("Percentuale di risposte corrette:", percentualeRisposteCorrette);
   if (percentualeRisposteCorrette > 60) {
+    messaggioCentrale.style.display = "block";
     messaggioCentrale.innerText = "Congratulations! You passed the quiz!";
   } else {
+    messaggioCentrale.style.display = "block";
     messaggioCentrale.innerText =
       "Oh no! You didn't pass the quiz... Try again!";
   }
