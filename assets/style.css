@@ -21,27 +21,27 @@ header {
 }
 
 #logo {
-  width: 200px;
+  width: 190px;
   height: auto;
 }
 
 #timer {
-  padding-top: 2px;
+  padding-top: 5px;
   border-color: #1eacac;
   color: #031330;
-  box-shadow: 0 0 3px rgb(160, 10, 180), inset 0 0 15px;
-  background: linear-gradient(40deg, #f2ecf3, #d57ff0);
+  box-shadow: 0 0 3px rgba(160, 10, 180, 0.788), inset 0 0 15px;
+  background: linear-gradient(40deg, #f2ecf3b9, #c278d8);
   font-weight: bolder;
   text-align: center;
   z-index: 999;
   width: 85px;
-  height: 50px;
+  height: 60px;
   border-radius: 20%;
   background-color: rgb(238, 240, 234);
   position: fixed;
   top: 20px;
   right: 50px;
-  font-size: 35px;
+  font-size: 40px;
   color: rgb(77, 5, 66);
 }
 
@@ -61,11 +61,10 @@ footer {
   display: flex;
   justify-content: flex-start; /* GOOGLE: permetti di riempire qualsiasi spazio vuoto sulle righe e definisce come vogliamo "giustificare" il contenuto */
   align-items: center; /* GOOGLE: permette di allineare gli oggetti lungo l'asse perpendicolare */
-  padding: 20px;
+  padding: 25px;
   position: fixed; /* aiuta a posizionare l'elemento */
   bottom: 0;
   left: 0;
-  z-index: 999;
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
   color: white;
@@ -73,16 +72,19 @@ footer {
 }
 
 .bottone {
+  background-color: #2980b9;
+  transform: perspective(100px) rotateX(5deg);
+  box-shadow: 0 0 3px rgba(188, 25, 221, 0.692), inset 0 0 5px;
+  background: linear-gradient(40deg, #f2ecf302, #acacac05);
   border-color: #ffffff8e;
   color: rgb(245, 235, 235);
   background-color: rgba(224, 210, 210, 0.1);
   border-radius: 35px;
-  width: 350px;
+  width: 370px;
   height: 70px;
   margin: 20px;
-  margin-top: 20px;
-  margin-right: 20px;
-  font-size: 1.3em;
+  margin-top: 10px;
+  font-size: 1.2em;
   font-weight: bolder;
   display: flex;
   justify-content: center;
@@ -91,7 +93,7 @@ footer {
 }
 
 .bottone:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 #contenitore {
@@ -121,42 +123,45 @@ footer {
 #domande {
   color: white;
   font-family: 'Outfit', sans-serif;
-  font-size: 2em;
+  font-size: 2.5em;
   font-weight: bolder;
-  padding-bottom: 50px;
-  padding-left: 10px;
+  padding-bottom: 70px;
+  padding-left: auto;
 }
 
 #Prossimo {
   margin-bottom: 40px;
-  border-color: #a01eac;
+  border-color: #6e0977e3;
   color: #3b0339;
-  box-shadow: 0 0 3px rgb(188, 25, 221), inset 0 0 5px;
-  background: linear-gradient(40deg, #f2ecf3, #cb72e6);
+  background: linear-gradient(40deg, #f2ecf302, #c35ae2d7);
   padding: 10px 30px;
   font-size: 1.3em;
   font-family: 'Outfit', sans-serif;
-  background-color: #d20094;
-  color: rgb(54, 4, 47);
+  color: rgba(240, 230, 238, 0.897);
   border-radius: 10px;
   cursor: pointer;
   font-weight: bolder;
-  border: 1px solid rgb(179, 45, 216);
+  box-shadow: 0 0 3px rgba(126, 54, 141, 0.692), inset 0 0 5px;
+  background: linear-gradient(40deg, #f2ecf300, #bd6ccea4);
+  border-color: #ffffff8e;
+  color: rgb(245, 235, 235);
+  background-color: rgba(224, 210, 210, 0.1);
 }
 
 .controls {
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   right: 20px;
 }
 
 #rD #risultatoDomanda {
-  font-size: 20px;
-  text-align: center;
+  font-size: 25px;
 }
 
 #risultatoDomanda {
-  font-size: 2em;
+  font-weight: bolder;
+  padding-top: 50px;
+
   margin-top: auto;
   margin-bottom: auto;
   /* margin-top: 120px;

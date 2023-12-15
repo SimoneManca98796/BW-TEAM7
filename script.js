@@ -46,7 +46,7 @@ const questions = [
   },
   {
     question:
-      "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?",
+      "In the programming language Java, which of these keywords would you put on a variable to make sure it doesn't get modified?",
     answers: ["Static", "Private", "Final", "Public"],
     correctAnswer: "Final",
   },
